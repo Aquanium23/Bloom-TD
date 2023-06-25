@@ -1,0 +1,58 @@
+To open shell => python manage.py shell
+
+# ORM in Django
+    => ORM stands for Object Relational Mapping
+    => It is a way to query the database using python code rather than raw sql queries.
+
+# Simple CRUD in a table using ORM
+    Create
+    => Student.objects.create(name="Jane", age=21, department="CS")
+
+cursor.execute("""
+INSERT INTO Student (name, age, department) values("", "", "")
+""")
+With ORM you don't have to use the code above.
+
+Read
+    => Student.objects.all() => It gives all the objects in QuerySet.
+    => Student.objects.filter(name="Jon") => [obj1, obj2, obj3] => This command gives a QuerySet(List but not exactly) of objects. => When there is nothing there,
+        it gives an empty query set.
+    => Student.objects.get(id=1) => obj1 => This command just gives you the object. => When there is nothing there or there are multiple objects, it gives an error.
+        it can only give one.
+
+.get
+1. If there is no data then it returns ObjectDoes Not Exist exception
+2. If there are more than one data it returns MultipleObjectsReturned exception
+3. Above conditions imply that we should always use get with unique fields
+    (id, username, email, phone)
+4. Always use get() in try_except block
+    try:
+        s = Student.objects.get(id=20)
+    except:
+        print("Invalid ID")
+
+.filter
+1. filter() method returns QuerySet.
+2. QuerySet is a list-like object with objects as its element.
+    [obj1, obj2, obj3]
+3. But QuerySet differs from list in many ways:
+    => List is mutable but QuerySet is immutable.
+    => List supports negative indexing but QuerySet doesn't support negative indexing, both support positive.
+4. If we query the table using .filter() method then it returns either the QuerySet with one or more table, or an empty QuerySet, it will never return an error.
+
+# Accessing the data from results of ORM
+s = Student.objects.get(id=1)
+s.name, s.department, s.row => It specifies the row from the column above.
+
+students = Student.objects.filter(department="Electrical")
+to get the specific data from a QuerySet use a loop.
+for student in students:
+    print(student.name, student.age, student.department)
+
+The function create() not only creates the object but also returns it similar to get().
+
+The function update() changes data from the QuerySet. Can only be used in QuerySet
+
+The function delete() deletes data from the QuerySet. Can be used in both QuerySet and get().
+
+The function all() gives the whole QuerySet, unlike filter which only gives a specific one.

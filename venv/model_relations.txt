@@ -1,0 +1,50 @@
+There are three types of table relations:
+    1. One-to-One Relation
+    2. One-to-Many Relation (Many-to-One)
+    3. Many-to-Many Relation
+
+In such Table relations, the object of one table is referred in the other table using a unique ID which is  also called a Foreign Key.
+
+Related Names
+ - Related names are the names (string) used in the model relations in django.
+ - These related names are used in the reverse relation.
+ - For e.g.
+    - There is a 'Classroom' model
+      There is another Student model which has 'Classroom' as a ForeignKey
+      Now to access data of classroom from student object, it is a forward relation.
+      But to access data of student from classroom object, it is a reverse relation, and we can use related_names for this.
+
+
+Functions
+
+=> Student.objects.filter(studentprofile__address='Bri ish')
+=> Student.objects.all().order_by('name', 'age')[:3]
+                                 ('-name')      [2:6]
+=> Student.objects.filter(age__lt=18)
+                         (age__gt=18)
+                         (age__lte=18)
+                         (age__gte=18)
+                         (age__range=(20,25))
+ages = [1,18,20]
+                         (age__in=ages)
+
+=> Student.objects.filter(name__startswith='j')
+                         (name__endswith='y')
+                         (name__contains='y')
+
+=> from django.db.models import q
+    Student.objects.filter(Q(department='IT') | Q(department='Electrical'), name='Jon')
+
+=> Student.objects.exclude(department='IT')
+
+=> len(Student.objects.all)
+Student.objects.count()
+Student.objects.filter().count()
+
+=> StudentProfile.objects.filter(student__name='Arya')
+=> Student.objects.filter(studentprofile__address='KTM')
+
+many-to-many
+=> Article.publication.through.objects.all()
+                                      .filter()
+                                      .create()

@@ -1,0 +1,39 @@
+{% extends 'form/base.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+<div style="margin-top: 30px">
+            <form method="post" action="{% url 'student_update' student.id %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Name</label>
+                    <input type="text" value="{{student.name}}" class="form-control" id="name" name="name">
+                </div>
+                <div class="row">
+                    <div class="col md-6">
+                    <label for="exampleInputPassword1" class="form-label">Age</label>
+                    <input type="number" value="{{ student.age }}" class="form-control" id="age" name="age">
+                </div>
+                <div class="col md-3">
+                    <label for="exampleInputEmail1" class="form-label">Department</label>
+                    <input type="text" value="{{ student.department }}" class="form-control" id="department" name="department">
+                </div>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Classroom</label>
+                    <input type="text" value="{{ classroom.name }}" class="form-control" id="classroom" name="classroom">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Profile</label>
+                    <input type="file" value="{{ student.studentprofile.email }}" class="form-control" id="file" name="profile_picture">
+                </div>
+                {% if student.profile_picture %}
+                    <img src="{{student.profile_picture.url}}" style="height:300px; width:600px">
+                {% endif %}
+                <button type="submit" class="btn btn-primary">Update</button>
+            </form>
+</div>
+{% endblock %}
